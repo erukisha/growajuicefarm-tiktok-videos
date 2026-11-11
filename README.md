@@ -4,4 +4,4 @@ Finished, published TikTok videos for **Grow a Juice Farm**, a free Roblox game:
 
 Play: https://www.roblox.com/games/131038759851436/Grow-a-Juice-Farm
 
-Videos are attached to the weekly releases.
+Each finished video is committed to `videos/`. Scheduled posts point at the commit-pinned raw URL of their file.
