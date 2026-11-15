@@ -399,7 +399,7 @@ sc.render.fps = 30
 sc.render.use_motion_blur = True
 sc.render.motion_blur_shutter = 0.45
 ee = sc.eevee
-ee.taa_render_samples = 24
+ee.taa_render_samples = 16
 for attr, val in [("use_shadows", True), ("use_raytracing", False), ("shadow_ray_count", 1), ("shadow_step_count", 6),
                   ("use_gtao", True), ("gtao_distance", 2.0), ("fast_gi_distance", 6.0)]:
     try:
