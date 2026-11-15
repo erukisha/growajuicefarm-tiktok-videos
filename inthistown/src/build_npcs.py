@@ -150,7 +150,7 @@ def plastic(name, rgb, glow, rough=0.42, metal=0.0, emit=None):
     if "Specular IOR Level" in p.inputs:
         p.inputs["Specular IOR Level"].default_value = 0.35
     gn = nt.nodes.new("ShaderNodeGroup"); gn.node_tree = glow; gn.name = "GlowIn"
-    mul = nt.nodes.new("ShaderNodeMath"); mul.operation = "MULTIPLY"; mul.inputs[1].default_value = 7.0
+    mul = nt.nodes.new("ShaderNodeMath"); mul.operation = "MULTIPLY"; mul.inputs[1].default_value = 1.6
     nt.links.new(gn.outputs[0], mul.inputs[0])
     p.inputs["Emission Color"].default_value = GOLD + (1,)
     if emit:   # a part that is always lit (the lantern flame): add its own emission on top

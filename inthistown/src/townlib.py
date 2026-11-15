@@ -125,7 +125,7 @@ class NPC(Person):
             ld = bpy.data.lights.new("GlowL_" + self.label, "POINT"); ld.color = lin((255, 206, 90)); ld.shadow_soft_size = 2.0
             lo = bpy.data.objects.new("GlowL_" + self.label, ld); sc.collection.objects.link(lo)
             lo.parent = self.arm; lo.location = (0, 0.6, 3.4)
-            track(ld, "energy", 0, lambda t: 900.0 * max(0.0, gc(t)))
+            track(ld, "energy", 0, lambda t: 70.0 * max(0.0, gc(t)))
 
 
 def lamps_on(night):
@@ -146,6 +146,6 @@ def glare_on():
         for n in ng.nodes:
             if n.bl_idname == "CompositorNodeGlare":
                 n.inputs["Type"].default_value = "Bloom"
-                for k, v in (("Threshold", 1.0), ("Strength", 0.85), ("Size", 0.7)):
+                for k, v in (("Threshold", 1.6), ("Strength", 0.45), ("Size", 0.5)):
                     n.inputs[k].default_value = v
         sc.render.use_compositing = True
