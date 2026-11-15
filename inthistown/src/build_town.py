@@ -308,24 +308,24 @@ def house(tag, x0, x1, y0, y1, wall, roof, h=9, facing="east", door_y=None):
         bx(tag + "_UWin%d" % i, fx - 0.05, fx + 0.07, yy - 1.0, yy + 1.0, 6.2, 8.0, GLASS_N, bevel=0.02)
 
 
-house("HouseW1", -48, -33, 8, 22, (120, 170, 210), ROOF_R, h=10)
-house("HouseW2", -48, -33, -12, 4, (240, 190, 120), ROOF_G, h=9)
+house("HouseW1", -48, -33, 9, 22, (120, 170, 210), ROOF_R, h=10)
+house("HouseW2", -48, -33, -12, 3, (240, 190, 120), ROOF_G, h=9)
 house("HouseW3", -48, -33, 26, 40, (220, 130, 120), ROOF_B, h=9)
 house("HouseW4", -48, -33, -34, -16, (180, 220, 160), ROOF_R, h=9)
 # the alley y 4..8: dead end at a tall wooden fence, a dumpster and crates
-bx("Alley_Floor", -48, -33, 4, 8, -0.05, 0.03, mat("AlleyFloor", (120, 118, 112), 0.85, kind="noise", rgb2=(104, 100, 96), scale=5), bevel=0)
-bx("Alley_Fence", -49.5, -48.5, 3.5, 8.5, 0, 7, WOOD)
-bx("Alley_Dumpster", -47.6, -44.4, 4.2, 6.1, 0, 2.6, mat("Dumpster", (60, 120, 80), 0.5))
-bx("Alley_DumpLid", -47.7, -44.3, 4.1, 6.2, 2.6, 2.85, mat("DumpLid", (40, 90, 60), 0.5))
-for i, (x, y, s) in enumerate(((-41, 7.0, 1.4), (-39.6, 7.2, 1.0), (-41, 7.0, 0.9))):
+bx("Alley_Floor", -48, -33, 3, 9, -0.05, 0.03, mat("AlleyFloor", (120, 118, 112), 0.85, kind="noise", rgb2=(104, 100, 96), scale=5), bevel=0)
+bx("Alley_Fence", -49.5, -48.5, 2.5, 9.5, 0, 7, WOOD)
+bx("Alley_Dumpster", -47.6, -44.4, 3.1, 4.9, 0, 2.6, mat("Dumpster", (60, 120, 80), 0.5))
+bx("Alley_DumpLid", -47.7, -44.3, 3.0, 5.0, 2.6, 2.85, mat("DumpLid", (40, 90, 60), 0.5))
+for i, (x, y, s) in enumerate(((-42.6, 3.8, 1.4), (-41.2, 3.7, 1.0), (-42.6, 3.8, 0.9))):
     z = 0.7 if i < 2 else 1.4 + 0.45
     bx("Alley_Crate%d" % i, x - s / 2, x + s / 2, y - s / 2, y + s / 2, z - s / 2 if i < 2 else 1.4, z + s / 2 if i < 2 else 1.4 + s, WOOD)
 
 # ---------------------------------------------------------------- park (south): bench, trees, path, a lamp
 bx("Park_Path", -30, 12, -44, -40.5, -0.05, 0.04, mat("Path", (200, 180, 140), 0.85, kind="noise", rgb2=(186, 166, 128), scale=3), bevel=0)
-bx("Park_Bench", -10.2, -5.8, -46.8, -45.6, 1.1, 1.35, WOOD)
-bx("Park_BenchBack", -10.2, -5.8, -47.2, -46.9, 1.35, 2.9, WOOD)
-for x in (-9.8, -6.2):
+bx("Park_Bench", -14.2, -3.8, -46.8, -45.6, 1.1, 1.35, WOOD)
+bx("Park_BenchBack", -14.2, -3.8, -47.2, -46.9, 1.35, 2.9, WOOD)
+for x in (-13.6, -9.0, -4.4):
     bx("Park_BenchLeg%d" % x, x - 0.15, x + 0.15, -47.0, -45.7, 0, 1.1, METAL)
 
 

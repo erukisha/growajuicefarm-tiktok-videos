@@ -66,6 +66,31 @@ POSES.update({
 })
 
 
+import bisect
+STORY_END = 84.0
+SEGS = []
+
+
+def warp_setup(tl):
+    """Video frames sample the story timeline through tl["segs"] ([old0, old1, new0, new1], skips at cuts)."""
+    SEGS[:] = tl["segs"]
+    setup(tl["total"])
+    def w(tn):
+        for o0, o1, n0, n1 in SEGS:
+            if tn <= n1:
+                return o0 + (o1 - o0) * max(0.0, tn - n0) / max(1e-6, n1 - n0)
+        return SEGS[-1][1]
+    TIMES[:] = [w(i / FPS) for i in range(NF)]
+
+
+def new_time(to):
+    """story time -> video time (None when that story moment is cut)."""
+    for o0, o1, n0, n1 in SEGS:
+        if o0 <= to <= o1:
+            return n0 + (n1 - n0) * (to - o0) / max(1e-6, o1 - o0)
+    return None
+
+
 class NPC(Person):
     """Person from npcs.blend plus a face track, lip flap and the glow. faces: [(t, name)] (held until the next key);
     glow: [(t, value, ease)] 0..1 (1 = full lie glow)."""
@@ -88,12 +113,72 @@ class NPC(Person):
         v = (b - a).length / 0.1
         return 0.0 if v > 40 else v   # teleports at cuts don't walk
 
+    def person_bake(self):
+        cp = self.pos
+        dist = [0.0]
+        for i in range(1, len(TIMES)):
+            step = (V(cp(TIMES[i])) - V(cp(TIMES[i - 1]))).length
+            dist.append(dist[-1] + (step if step < 3.0 else 0.0))
+
+        def fidx(t):
+            return min(len(TIMES) - 1, max(0, bisect.bisect_left(TIMES, t - 1e-6)))
+        dist_at = lambda t: dist[fidx(t)]
+        yc = Curve(self.yaw)
+
+        def loc(t):
+            x, y = cp(t)
+            sp = min(1.0, self.speed(t) / 6.0)
+            bob = 0.13 * sp * abs(math.sin(math.pi * dist_at(t) / self.stride))
+            hop = sum(h * bump(t, t0, d) for t0, h, d in self.hops)
+            return (x, y, ground_at(x, y) + bob + hop + (self.zc(t) if self.zc else 0.0))
+        track_vec(self.arm, "location", 3, loc)
+        tl = Curve(self.tilt) if self.tilt else (lambda t: 0.0)
+        track_vec(self.arm, "rotation_euler", 3, lambda t: (math.radians(tl(t)), 0, yc(t)))
+        if self.scale:
+            sc_ = Curve(self.scale)
+            track_vec(self.arm, "scale", 3, lambda t: (max(0.0005, sc_(t)),) * 3)
+        rest = self.rest
+        keys = sorted(self.poses, key=lambda k: k[0])
+
+        def pose_at(bone, t):
+            if t <= keys[0][0]:
+                return _pose_q(self.arm, rest, keys[0][1], bone)
+            for i in range(1, len(keys)):
+                if t < keys[i][0]:
+                    t0, p0 = keys[i - 1][0], keys[i - 1][1]
+                    t1, p1, e = keys[i][0], keys[i][1], (keys[i][2] if len(keys[i]) > 2 else "smooth")
+                    u = EASE[e]((t - t0) / max(1e-6, t1 - t0))
+                    return qslerp(_pose_q(self.arm, rest, p0, bone), _pose_q(self.arm, rest, p1, bone), u)
+            return _pose_q(self.arm, rest, keys[-1][1], bone)
+        holding = self.weapon is not None or self.label == "vince"
+        for pb in self.arm.pose.bones:
+            name = pb.name
+
+            def fn(t, name=name):
+                q = pose_at(name, t)
+                sp = min(1.0, self.speed(t) / 5.0)
+                if sp > 0.02:
+                    ph = math.sin(math.pi * dist_at(t) / self.stride)
+                    sw = {"UpperLeg.L": 32 * ph, "UpperLeg.R": -32 * ph, "LowerLeg.L": -22 * max(0, -ph), "LowerLeg.R": -22 * max(0, ph),
+                          "UpperArm.L": -24 * ph, "UpperArm.R": 24 * ph, "UpperTorso": 3}
+                    if name in sw:
+                        q = q @ _local(rest, name, (sw[name] * sp, 0, 0))
+                if name == "UpperTorso":
+                    q = q @ _local(rest, name, (1.5 * math.sin(t * 2.4), 0, 0))
+                if self.extra:
+                    d = self.extra(t, name)
+                    if d:
+                        q = q @ _local(rest, name, d)
+                return tuple(q)
+            track_vec(self.arm, 'pose.bones["%s"].rotation_quaternion' % name, 4, fn)
+
     def bake(self):
-        Person.bake(self)
+        self.zc = Curve(self.zoff) if getattr(self, "zoff", None) else None
+        self.person_bake()
         keys = sorted(self.faces, key=lambda k: k[0])
         rnd = random.Random(self.blink_seed)
         blinks, t = [], rnd.uniform(0.5, 3)
-        while t < TOTAL:
+        while t < STORY_END:
             blinks.append(t); t += rnd.uniform(2.2, 4.8)
         speaking = [ln for ln in LINES if ln["who"] == self.label]
 
