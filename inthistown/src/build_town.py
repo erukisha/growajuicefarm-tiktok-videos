@@ -281,8 +281,8 @@ shop("Shop3", -22, -8, (240, 226, 160), ROOF_G, (60, 160, 90), "GENERAL STORE", 
 bx("Bakery_Counter", 30.6, 33.2, 6.5, 10.5, 0.2, 2.9, WOOD)
 bx("Bakery_CounterTop", 30.3, 33.3, 6.3, 10.7, 2.9, 3.15, mat("CounterTop", (245, 240, 230), 0.4))
 # barber pole
-cyl("Barber_Pole", 0.35, 3.0, (32.4, 15.6, 4.0), mat("BarberPole", (230, 40, 50), 0.3), verts=16)
-ball("Barber_PoleTop", 0.42, (32.4, 15.6, 5.6), GOLD)
+cyl("Barber_Pole", 0.35, 3.0, (32.6, 13.6, 4.0), mat("BarberPole", (230, 40, 50), 0.3), verts=16)
+ball("Barber_PoleTop", 0.42, (32.6, 13.6, 5.6), GOLD)
 
 
 # ---------------------------------------------------------------- west side: houses and the alley (y 4..8)
@@ -345,7 +345,7 @@ for i in range(8):
     ball("Bush%d" % i, 1.0, (-18 + i * 5.1 if i < 4 else 2.7 + (i - 4) * 5.1, -18.6, 0.6), LEAF, scale=(1.4, 0.9, 0.8))
 
 # street lamps (bulb emission + point lights are animated by sky())
-LAMPS = [(-19, -19), (19, -19), (-19, 17), (19, 17), (31.5, -6), (31.5, 29), (-31.5, 14), (-31.5, -14), (-19, -42.6), (6, -42.6)]
+LAMPS = [(-19, -19), (19, -19), (-19, 17), (19, 17), (31.5, -6), (31.5, 29), (-31.5, 14), (-31.5, -14), (-19, -38.6), (6, -38.6)]
 for i, (x, y) in enumerate(LAMPS):
     cyl("LampPost%d" % i, 0.18, 7.0, (x, y, 3.5), METAL, verts=12)
     box("LampHead%d" % i, (0.9, 0.9, 1.0), (x, y, 7.3), METAL)
