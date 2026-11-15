@@ -345,7 +345,7 @@ for i in range(8):
     ball("Bush%d" % i, 1.0, (-18 + i * 5.1 if i < 4 else 2.7 + (i - 4) * 5.1, -18.6, 0.6), LEAF, scale=(1.4, 0.9, 0.8))
 
 # street lamps (bulb emission + point lights are animated by sky())
-LAMPS = [(-19, -19), (19, -19), (-19, 17), (19, 17), (31.5, 4), (31.5, 20), (-31.5, 6), (-31.5, -14), (-12, -42.6), (6, -42.6)]
+LAMPS = [(-19, -19), (19, -19), (-19, 17), (19, 17), (31.5, -6), (31.5, 20), (-31.5, 14), (-31.5, -14), (-12, -42.6), (6, -42.6)]
 for i, (x, y) in enumerate(LAMPS):
     cyl("LampPost%d" % i, 0.18, 7.0, (x, y, 3.5), METAL, verts=12)
     box("LampHead%d" % i, (0.9, 0.9, 1.0), (x, y, 7.3), METAL)
@@ -416,18 +416,12 @@ try:
     ng.interface.new_socket("Image", in_out="OUTPUT", socket_type="NodeSocketColor")
     rl = ng.nodes.new("CompositorNodeRLayers")
     gl = ng.nodes.new("CompositorNodeGlare")
-    try:
-        gl.glare_type = "BLOOM"
-    except Exception:
-        gl.glare_type = "FOG_GLOW"
-    for k, v in (("threshold", 1.0), ("size", 7), ("mix", 0.0), ("quality", "MEDIUM")):
-        try:
-            setattr(gl, k, v)
-        except Exception:
-            pass
-    for k, v in (("Threshold", 1.0), ("Strength", 0.9), ("Size", 0.6)):
+    for k, v in (("Type", "Bloom"), ("Quality", "High"), ("Threshold", 1.0), ("Strength", 0.85), ("Size", 0.7), ("Saturation", 1.0)):
         if k in gl.inputs:
-            gl.inputs[k].default_value = v
+            try:
+                gl.inputs[k].default_value = v
+            except Exception as ex:
+                print("GLARE", k, ex)
     go = ng.nodes.new("NodeGroupOutput")
     ng.links.new(rl.outputs["Image"], gl.inputs["Image"])
     ng.links.new(gl.outputs["Image"], go.inputs[0])
