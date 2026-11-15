@@ -97,14 +97,14 @@ face("vince", 10.9, "smug")
 
 # ================================================================ SCENE 3: the bakery, 12.9 - 25.8
 put("rosa", 12.9, (31.8, 8.5), yaw=PI / 2)
-put("vince", 12.9, (28.5, 8.5), yaw=-PI / 2)
+put("vince", 12.9, (28.2, 8.5), yaw=-PI / 2)
 face("rosa", 12.9, "smile"); face("rosa", 16.2, "suspicious"); face("rosa", 17.8, "worried"); face("rosa", 19.3, "smile")
 face("vince", 12.9, "smile"); face("vince", 15.0, "smug"); face("vince", 20.5, "grin"); face("vince", 23.6, "smug")
 pose("rosa", 12.9, "idle"); pose("rosa", 16.3, "shrug"); pose("rosa", 17.6, "think"); pose("rosa", 19.1, "idle")
 pose("rosa", 19.9, "give"); pose("rosa", 20.8, "wave"); pose("rosa", 22.2, "idle")
 pose("vince", 12.9, "idle"); pose("vince", 15.0, "shrug"); pose("vince", 16.2, "idle"); pose("vince", 17.4, "hips")
 pose("vince", 19.2, "idle"); pose("vince", 20.3, "carry")
-walk("vince", [(20.9, (28.5, 8.5)), (25.8, (13.0, -3.0))])
+walk("vince", [(20.9, (28.2, 8.5)), (25.8, (13.0, -3.0))])
 leave("rosa", 25.9)
 
 # ================================================================ SCENE 4: montage, 25.8 - 29.2
@@ -114,7 +114,7 @@ walk("vince", [(25.8, (26.0, 23.6)), (26.3, (30.0, 21.9))])
 N["vince"].yaw.append((26.3, fa((30.0, 21.9), (30.1, 18.4)), "smooth"))
 face("vince", 25.8, "smug"); face("kai", 25.8, "smile"); face("kai", 26.9, "suspicious"); face("ana", 25.8, "neutral")
 pose("kai", 26.9, "shrug"); pose("kai", 27.4, "idle")
-walk("kai", [(27.0, (30.1, 18.4)), (27.4, (29.6, 17.9))])
+walk("kai", [(27.0, (30.1, 18.4)), (27.4, (28.2, 18.6))])
 leave("kai", 27.45); leave("ana", 27.45)
 put("tom", 27.4, (32.0, -13.6), yaw=PI / 2)
 put("vince", 27.4, (29.4, -15.2), yaw=fa((29.4, -15.2), (32.0, -13.6)))
@@ -137,11 +137,11 @@ N["mia"].yaw += [(29.2, 0.0, "hold"), (29.6, fa((-11.4, -46.4), (2, -41.8)), "sm
 N["mom"].yaw += [(32.2, 0.0, "hold"), (32.6, 0.35, "smooth")]
 
 # ================================================================ SCENE 6: night, the lantern goes missing, 35.1 - 39.6
-walk("vince", [(35.1, (5.0, 14.0)), (36.4, (1.6, 17.8)), (37.1, (0.3, 19.9))], ease="smooth")
-N["vince"].yaw.append((37.1, fa((0.3, 19.9), (0, 22.5)), "smooth"))
+walk("vince", [(35.1, (5.0, 14.0)), (36.4, (1.6, 17.8)), (37.1, (0.3, 19.5))], ease="smooth")
+N["vince"].yaw.append((37.1, fa((0.3, 19.5), (0, 22.5)), "smooth"))
 pose("vince", 35.1, "sneak", "hold"); pose("vince", 37.1, "grab"); pose("vince", 37.8, "sneak")
 face("vince", 35.1, "smug")
-walk("vince", [(38.2, (0.3, 19.9)), (39.6, (-6.5, 14.0))], ease="smooth")
+walk("vince", [(38.2, (0.3, 19.5)), (39.6, (-6.5, 14.0))], ease="smooth")
 leave("mia", 35.15); leave("mom", 35.15)
 
 # ================================================================ SCENE 7: the town meeting, 39.6 - 65.0
@@ -187,20 +187,20 @@ face("mayor", 62.1, "grin")
 
 # ================================================================ SCENE 8: the chase, 65.0 - 73.6
 face("vince", 65.0, "worried"); pose("vince", 65.0, "shrug"); pose("vince", 66.2, "idle")
-walk("vince", [(66.3, ROW["vince"]), (66.75, (-4.0, 11.6)), (67.6, (-18.0, 12.6)), (68.1, (-24.0, 10.0)), (68.6, (-31.0, 6.0)),
+walk("vince", [(66.3, ROW["vince"]), (66.55, (0.4, 10.8)), (66.85, (-4.0, 12.8)), (67.6, (-18.0, 13.4)), (68.1, (-24.0, 10.5)), (68.6, (-31.0, 6.0)),
                (69.4, (-39.0, 6.6)), (69.9, (-43.0, 6.9))])
 N["vince"].stride = 3.4
 pose("vince", 69.9, "cower"); face("vince", 69.9, "worried")
 N["vince"].yaw.append((70.0, fa((-43.0, 6.9), (-36, 6)), "smooth"))
 for lab, lag, start, end in (("sheriff", 0.45, SHERIFF, (-37.6, 6.0)), ("mia", 0.75, ROW["mia"], (-33.0, 6.2)),
-                             ("rosa", 1.3, ROW["rosa"], (-29.4, 3.4)), ("kai", 1.25, ROW["kai"], (-29.4, 8.8))):
+                             ("rosa", 1.8, ROW["rosa"], (-27.4, 2.4)), ("kai", 1.25, ROW["kai"], (-29.4, 8.8))):
     pts = [(66.3 + lag, start)]
     if lab in ("mia", "kai"):
         pts.append((66.9 + lag, (start[0] - 1.5, 12.4)))
     lane = {"sheriff": 6.0, "mia": 6.2, "kai": 8.8}.get(lab, 6.0)
     pts += [(67.7 + lag, (-18.0, 12.6)), (68.2 + lag, (-24.0, 10.0 if lab != "kai" else 11.0)), (68.9 + lag, (-29.0, lane)), (69.7 + lag * 0.5, end)]
     if lab == "rosa":
-        pts = [(66.3 + lag, start), (67.4 + lag, (-24.0, 7.6)), (67.9 + lag, (-26.5, 3.4)), (68.6 + lag, end)]
+        pts = [(66.3 + lag, start), (67.1 + lag, (-21.5, 3.0)), (67.9 + lag, end)]
     walk(lab, pts)
     N[lab].yaw.append((69.9 + lag * 0.5, fa(end, (-43.0, 6.9)), "smooth"))
     face(lab, 66.3, "angry")
@@ -211,7 +211,7 @@ pose("vince", 72.0, "idle"); face("vince", 72.3, "shocked"); face("vince", 73.0,
 
 # ================================================================ SCENE 9: the twist, 73.6 - end
 END = 83.5
-MAYOR = (-3.0, 20.6)
+MAYOR = (-3.7, 20.3)
 put("mayor", 73.6, MAYOR, look=(0, 12))
 pose("mayor", 73.6, "give", "hold"); pose("mayor", 74.6, "idle"); face("mayor", 73.6, "grin")
 CROWD2 = {"sheriff": (6.9, 16.0), "vince": (2.3, 16.2), "mia": (-2.3, 16.0), "mom": (-6.9, 15.8), "rosa": (-11.5, 15.6),
@@ -360,8 +360,8 @@ SHOTS = [
     cu(44.8, 46.2, "mayor", SHERIFF, 6.3, 30, side=0.8, dz=0.3),
     (46.2, 47.2, (4.8, -0.4, 8.2), (4.7, 0.0, 8.0), (0.0, 14.0, 4.4), (0.0, 14.0, 4.4), 26, "smooth"),
     cu(47.2, 49.6, "vince", SHERIFF, 6.2, 32, side=-0.6),
-    cu(49.6, 51.1, "mia", ROW["vince"], 5.6, 32, side=1.4, dz=-0.2),
-    cu(51.1, 52.0, "vince", ROW["mia"], 5.6, 32, side=-1.4),
+    cu(49.6, 51.1, "mia", (2.6, 12.6), 5.8, 32, side=0.0, dz=-0.2),
+    cu(51.1, 52.0, "vince", (3.4, 12.2), 5.8, 32, side=0.0),
     (52.0, 54.8, (3.0, 14.2, 5.0), (3.0, 13.8, 4.9), (3.0, 7.2, 3.9), (3.0, 7.2, 3.9), 26, "smooth"),
     cu(54.8, 56.3, "vince", SHERIFF, 5.8, 34, side=0.5),
     (56.3, 58.5, (3.0, 19.5, 11.0), (3.0, 19.0, 10.6), (1.0, 6.5, 2.8), (1.0, 6.5, 2.8), 24, "smooth"),
@@ -372,7 +372,7 @@ SHOTS = [
     (66.7, 69.2, (-6.0, -14.0, 20.0), (-14.0, -14.0, 19.0), (-6.0, 10.0, 2.0), (-32.0, 7.0, 2.0), 26, "smooth"),
     (69.2, 70.4, (-31.0, 5.6, 9.8), (-31.8, 5.8, 9.4), (-41.5, 6.6, 1.4), (-42.6, 6.8, 1.2), 28, "smooth"),
     (70.4, 72.0, (-46.8, 6.0, 4.6), (-46.6, 6.1, 4.5), (-37.0, 6.0, 4.0), (-37.0, 6.0, 4.0), 26, "smooth"),
-    (72.0, 73.6, lambda t, u: ((-34.6, 4.6, 1.6), (lan_pos(t)[0], lan_pos(t)[1], max(0.7, min(2.4, lan_pos(t)[2] + 0.6))), 30)),
+    (72.0, 73.6, lambda t, u: ((-40.0, 3.7, 5.6), (lan_pos(t)[0], lan_pos(t)[1], max(0.7, min(2.4, lan_pos(t)[2] + 0.6))), 30)),
     (73.6, 75.5, (0.0, 3.0, 8.0), (0.0, 4.5, 8.0), (0.0, 22.0, 5.4), (0.0, 22.0, 5.6), 26, "smooth"),
     cu(75.5, 77.5, "mayor", (0.0, 12.0), 6.3, 32, side=0.6),
     cu(77.5, 79.6, "mayor", (0.0, 12.0), 5.6, 30, side=-0.5, push_to=4.8),
