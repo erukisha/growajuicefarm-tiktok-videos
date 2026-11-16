@@ -13,3 +13,13 @@ Each episode is 60+ seconds, made fully in Blender with generic blocky Roblox NP
 
 Cast voices (Kokoro): narrator am_michael, Vince am_puck, Mia af_sky +3.5 st, Mom af_bella, Rosa af_heart, Sheriff am_onyx −0.5 st,
 Mayor bm_lewis, Old man bm_george −1.5 st, Dan am_eric, Bob am_liam.
+
+## Genre notes (studied 2026-11-15, after the user said v2 "feels off")
+- The first spoken line IS the rule, from frame 0: "In this town, ..." No cold open.
+- One main voice tells it, usually the main character in first person (here: Vince, Kokoro am_adam +3 st 1.15x, the
+  user's pick). Other characters get short lines only.
+- Three beats: the rule -> the disaster -> the twist. The twist recasts earlier scenes / uses a loophole in the rule /
+  turns the hero's flaw into the solution. Plant clues (ep1: the thief's top hat, the Mayor answering with a question).
+- Root for the hero; comedy with a bit of warmth; tight gaps (0.1-0.35 s), the longest pause right before the twist.
+- Episode 1 v3 = `ep1b.py` (67.7 s): told by Vince; the town blames the question-liar, he tells the truth and doesn't
+  glow, then catches the Mayor with his own trick.
